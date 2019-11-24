@@ -3,9 +3,12 @@ OBJ_DIR := _build
 EXEC := cpp-playground
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+
+INC_DIRS += 
+INCLUDE = $(addprefix -I,$(INC_DIRS))
+
 LDFLAGS := 
 CXXFLAGS := -MMD -std=c++17
-
 CXX := g++-9
 
 # Echo suspend
@@ -23,7 +26,7 @@ $(EXEC): $(OBJ_DIR) $(OBJ_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo Compiling: $(notdir $@)
-	$(NO_ECHO) $(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(NO_ECHO) $(CXX) $(INCLUDE) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
 	$(NO_ECHO) mkdir $@
