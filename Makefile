@@ -3,6 +3,7 @@ OBJ_DIR := _build
 EXEC := cpp-playground
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+DEPENDS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.d,$(SRC_FILES))
 
 INC_DIRS += 
 INCLUDE = $(addprefix -I,$(INC_DIRS))
@@ -17,6 +18,8 @@ NO_ECHO :=
 else
 NO_ECHO := @
 endif
+
+-include $(DEPENDS)
 
 all: $(SRC_FILES) $(EXEC)
 
